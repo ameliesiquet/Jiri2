@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class JiriStoreRequest extends FormRequest
+class ContactStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class JiriStoreRequest extends FormRequest
     {
         return [
             'name' =>'required|string|between:3,255',
-            'starting_at' => 'required|date_format:Y-m-d H:i',
+            'email' => 'required|string|email|max:255',
         ];
     }
 }

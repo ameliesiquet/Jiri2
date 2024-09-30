@@ -3,9 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Contact;
-use App\Models\Jiri;
-use App\Models\Project;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ContactSeeder extends Seeder

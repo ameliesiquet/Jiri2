@@ -10,7 +10,7 @@ class Jiri extends Model
     use HasFactory;
 
     protected $casts = [
-        'starting_at' => 'datetime',
+        'starting_at' => 'date:Y-m-d H:i',
     ];
 
     protected $fillable = [

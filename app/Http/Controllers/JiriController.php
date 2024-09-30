@@ -36,10 +36,7 @@ class JiriController extends Controller
      */
     public function store(JiriStoreRequest $request):RedirectResponse
     {
-
-
         $jiri = Jiri::create($request->validated());
-
         return to_route('jiris.show', $jiri);
     }
 
@@ -57,7 +54,6 @@ class JiriController extends Controller
     public function edit(Jiri $jiri)
     {
         return view('jiris.edit', compact('jiri'));
-
     }
 
     /**

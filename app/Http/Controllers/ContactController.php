@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContactStoreRequest;
 use App\Models\Contact;
-use App\Models\Jiri;
-use App\Models\Project;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class ContactController extends Controller
 {
@@ -23,47 +22,50 @@ class ContactController extends Controller
      */
     public function create()
     {
-        //
+        return view('contacts.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ContactStoreRequest $request):RedirectResponse
     {
-        //
+        $contact = Contact::create($request->validated());
+        return to_route('contacts.show', $contact);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Contact $contact)
     {
-
+        return view('contacts.show', compact('contact'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Contact $contact)
     {
-        //
+        return view('contacts.edit', compact('contact'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ContactStoreRequest $request, Contact $contact):RedirectResponse
     {
-        //
+        $contact->update($request->validated());
+        return to_route('contacts.show', $contact);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Contact $contact)
     {
-        //
+        $contact->delete();
+        return to_route('contacts.index');
     }
 }
 

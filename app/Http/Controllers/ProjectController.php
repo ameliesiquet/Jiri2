@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectStoreRequest;
-use App\Models\Jiri;
 use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -33,7 +31,6 @@ class ProjectController extends Controller
     public function store(ProjectStoreRequest $request):RedirectResponse
     {
         $project = Project::create($request->validated());
-
         return to_route('projects.show', $project);
     }
 
