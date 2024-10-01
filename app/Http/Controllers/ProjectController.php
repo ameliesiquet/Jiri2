@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProjectStoreRequest;
 use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ProjectController extends Controller
 {
@@ -13,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Auth::user()->projects;
         return view('projects.index', compact('projects'));
     }
 
@@ -30,6 +32,7 @@ class ProjectController extends Controller
      */
     public function store(ProjectStoreRequest $request):RedirectResponse
     {
+
         $project = Project::create($request->validated());
         return to_route('projects.show', $project);
     }
@@ -39,6 +42,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        if (! Gate::allows('view', $project)) {
+            abort(403);
+        }
         return view('projects.show', compact('project'));
     }
 

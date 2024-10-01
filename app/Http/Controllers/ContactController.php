@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactStoreRequest;
 use App\Models\Contact;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ContactController extends Controller
 {
@@ -13,7 +15,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::all();
+        $contacts = Auth::user()->contacts;
         return view('contacts.index', compact('contacts'));
     }
 
@@ -39,6 +41,9 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
+        if (! Gate::allows('view', $contact)) {
+            abort(403);
+        }
         return view('contacts.show', compact('contact'));
     }
 
