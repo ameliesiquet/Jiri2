@@ -30,12 +30,17 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProjectStoreRequest $request):RedirectResponse
+    public function store(ProjectStoreRequest $request): RedirectResponse
     {
+        $project = Project::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'user_id' => Auth::id(),
+        ]);
 
-        $project = Project::create($request->validated());
         return to_route('projects.show', $project);
     }
+
 
     /**
      * Display the specified resource.
@@ -53,6 +58,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        if (! Gate::allows('view', $project)) {
+            abort(403);
+        }
         return view('projects.edit', compact('project'));
     }
 
@@ -61,6 +69,9 @@ class ProjectController extends Controller
      */
     public function update(ProjectStoreRequest $request, Project $project):RedirectResponse
     {
+        if (! Gate::allows('update', $project)) {
+            abort(403);
+        }
         $project->update($request->validated());
         return to_route('projects.show', $project);
     }

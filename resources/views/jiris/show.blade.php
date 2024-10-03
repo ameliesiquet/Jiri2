@@ -19,13 +19,14 @@
     </dl>
     <div class="flex gap-2">
             <a href="/jiris/{{$jiri->id}}/edit" class="bg-zinc-700 font-bold text-white rounded-md p-2 px-4 tracking-wider uppercase"><span>{{__('Edit')}}</span></a>
-        <form action="/jiris/{{$jiri->id}}" method="post" class="m-0">
+        <form action="{{ route('jiris.destroy',$jiri) }}" method="post" class="m-0">
             @method('DELETE')
             @csrf
-            <x-red-submission-button>
-                {{__('Delete')}}
-            </x-red-submission-button>
+            <x-form-submission-button class="bg-red-500">
+                {!! __('Delete') !!}
+            </x-form-submission-button>
         </form>
     </div>
+    <a href="/jiris" class="font-bold m-4"> ← {{ __("Go back") }}</a>
 </x-layouts.main>
 

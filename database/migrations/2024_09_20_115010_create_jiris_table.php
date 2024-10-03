@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->timestamp('starting_at');
             $table->string('name');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
         });
     }
 

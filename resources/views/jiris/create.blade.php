@@ -39,6 +39,6 @@
                    spellcheck="false"
                    class="border border-grey-700 focus:invalid:border-pink-500 invalid:text-pink-600 rounded-md p-2">
         </div>
-        <x-form-submission-button>{{__('Create this Jiri')}}</x-form-submission-button>
+        <x-form-submission-button class="bg-zinc-700">{{__('Create this Jiri')}}</x-form-submission-button>
     </form>
 </x-layouts.main>

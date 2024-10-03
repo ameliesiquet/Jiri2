@@ -27,9 +27,10 @@ class ContactPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, Contact $contact): bool
     {
-        //
+        return $user->id === $contact->user_id;
+
     }
 
     /**
@@ -37,7 +38,8 @@ class ContactPolicy
      */
     public function update(User $user, Contact $contact): bool
     {
-        //
+        return $user->id === $contact->user_id;
+
     }
 
     /**

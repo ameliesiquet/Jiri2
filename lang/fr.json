@@ -27,6 +27,8 @@
     "Edit this contact" : "Modifier ce contact",
     "Contact name" : "Nom du contact",
     "Email" : "Adresse mail",
-    "Contact email" : "Adresse mail du contact"
+    "Contact email" : "Adresse mail du contact",
+
+    "Go back" : "Retour"
 
 }
