@@ -69,11 +69,11 @@ class User extends Authenticatable
             ->orderBy('starting_at');
     }
 
-    public function projects(){
+    public function projects(): HasMany{
         return $this->hasMany(Project::class);
     }
 
-    public function contacts(){
+    public function contacts(): HasMany{
         return $this->hasMany(Contact::class);
     }
 }

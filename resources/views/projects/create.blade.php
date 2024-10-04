@@ -33,7 +33,7 @@
                    type="text"
                    value="{{old('description')}}"
                    name="description"
-                   placeholder="{{ $now }}"
+                   placeholder="Description"
                    autocapitalize="none"
                    autocorrect="off"
                    spellcheck="false"

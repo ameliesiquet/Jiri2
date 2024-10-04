@@ -17,7 +17,6 @@ class JiriController extends Controller
      */
     public function index():View
     {
-
         $upcomingJiris = Auth::user()->upcomingJiris;
         $pastJiris = Auth::user()->pastJiris;
 
@@ -37,7 +36,8 @@ class JiriController extends Controller
      */
     public function store(JiriStoreRequest $request):RedirectResponse
     {
-        $jiri = Jiri::create($request->validated());
+        $user = Auth::user();
+        $jiri = $user->jiris()->create($request->validated());
         return to_route('jiris.show', $jiri);
     }
 
@@ -46,9 +46,6 @@ class JiriController extends Controller
      */
     public function show(Jiri $jiri)
     {
-        if (! Gate::allows('view', $jiri)) {
-            abort(403);
-        }
         return view('jiris.show', compact('jiri'));
     }
 
@@ -57,9 +54,6 @@ class JiriController extends Controller
      */
     public function edit(Jiri $jiri)
     {
-        if (! Gate::allows('view', $jiri)) {
-            abort(403);
-        }
         return view('jiris.edit', compact('jiri'));
 
     }
@@ -69,9 +63,6 @@ class JiriController extends Controller
      */
     public function update(JiriStoreRequest $request, Jiri $jiri):RedirectResponse
     {
-        if (! Gate::allows('update', $jiri)) {
-            abort(403);
-        }
         $jiri->update($request->validated());
         return to_route('jiris.show', $jiri);
     }

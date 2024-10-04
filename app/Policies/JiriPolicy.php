@@ -46,7 +46,7 @@ class JiriPolicy
      */
     public function delete(User $user, Jiri $jiri): bool
     {
-        //
+        return $user->id === $jiri->user_id;
     }
 
     /**

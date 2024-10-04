@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ContactRole;
 use App\Models\Contact;
 use App\Models\Jiri;
 use App\Models\Project;
@@ -17,28 +18,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)
-            ->has(Jiri::factory()->count(5), 'jiris')
-            ->has(Project::factory()->count(8), 'projects')
-            ->has(Contact::factory()->count(4), 'contacts')
-            ->create();
+        User::factory(1)
+            ->hasJiris(2)
+            ->hasProjects(2)
+            ->hasContacts(2)
+            ->create()
+            ->each(function ($user){
+                $user->jiris->each(function ($jiri) use ($user){
+                    $jiri->contacts()->attach(
+                        $user->contacts->random(2),
+                        ['role'=> random_int(0,1) ?
+                        ContactRole::Evaluator->value :
+                        ContactRole::Student->value]
+                    );
+                });
+            });
 
-        User::factory()
-            ->has(Jiri::factory()->count(5), 'jiris')
-            ->has(Project::factory()->count(8), 'projects')
-            ->has(Contact::factory()->count(4), 'contacts')
-            ->create([
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-                'password' => '1234567890',
-            ]);
-
-        $this->call(
-            [
-                //JiriSeeder::class,
-                //ProjectSeeder::class,
-                //ContactSeeder::class,
-            ]
-        );
+        User::factory(1)
+            ->hasJiris(2)
+            ->hasProjects(2)
+            ->hasContacts(2)
+            ->create(['name'=>'Amélie Siquet', 'email'=>'test@example.com', 'password' => '1234567890'])
+            ->each(function ($user){
+                $user->jiris->each(function ($jiri) use ($user){
+                    $jiri->evaluators()->attach(
+                        $user->contacts->random(2)
+                    );
+                });
+            });
     }
 }

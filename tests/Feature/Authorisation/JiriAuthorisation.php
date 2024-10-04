@@ -4,7 +4,7 @@ use App\Models\User;
 use function Pest\Laravel\actingAs;
 use function Pest\Laravel\get;
 
-beforeEach(function (){
+beforeEach(function () {
     $this->user = User::factory()
         ->hasJiris(1)
         ->create();

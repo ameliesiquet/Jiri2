@@ -32,11 +32,8 @@ class ContactController extends Controller
      */
     public function store(ContactStoreRequest $request):RedirectResponse
     {
-        $contact = Contact::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'user_id' => Auth::id(),
-        ]);
+        $user = Auth::user();
+        $contact = $user->contacts()->create($request->validated());
         return to_route('contacts.show', $contact);
     }
 
@@ -45,9 +42,6 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
-        if (! Gate::allows('view', $contact)) {
-            abort(403);
-        }
         return view('contacts.show', compact('contact'));
     }
 
@@ -56,9 +50,6 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        if (! Gate::allows('view', $contact)) {
-            abort(403);
-        }
         return view('contacts.edit', compact('contact'));
     }
 
@@ -67,9 +58,6 @@ class ContactController extends Controller
      */
     public function update(ContactStoreRequest $request, Contact $contact):RedirectResponse
     {
-        if (! Gate::allows('view', $contact)) {
-            abort(403);
-        }
         $contact->update($request->validated());
         return to_route('contacts.show', $contact);
     }

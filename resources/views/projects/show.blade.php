@@ -6,9 +6,12 @@
         </div>
     </dl>
     <div class="flex gap-2">
+        @can('edit', $project)
         <a href="/projects/{{$project->id}}/edit"
            class="bg-zinc-700 font-bold text-white rounded-md p-2 px-4 tracking-wider uppercase"><span>{{__('Edit')}}</span>
         </a>
+        @endcan
+        @can('delete', $project)
         <form action="/projects/{{$project->id}}" method="post" class="m-0">
             @method('DELETE')
             @csrf
@@ -16,6 +19,7 @@
                 {!! __('Delete') !!}
             </x-form-submission-button>
         </form>
+        @endcan
     </div>
     <a href="/projects" class="font-bold m-4"> ← {{ __("Go back") }}</a>
 </x-layouts.main>
