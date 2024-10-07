@@ -29,6 +29,9 @@
     "Email" : "Adresse mail",
     "Contact email" : "Adresse mail du contact",
 
-    "Go back" : "Retour"
+    "Go back" : "Retour",
+    "Change role" : "Changer le role",
+    "Students" : "Étudiants",
+    "Evaluators" : "Évaluateurs"
 
 }

@@ -21,6 +21,10 @@ return new class extends Migration
             $table->foreign('jiri_id')->references('id')->on('jiris');
             $table->foreign('contact_id')->references('id')->on('contacts');
         });
+        Schema::table('assignments', function (Blueprint $table){
+            $table->foreign('jiri_id')->references('id')->on('jiris');
+            $table->foreign('project_id')->references('id')->on('projects');
+        });
 
     }
 
@@ -38,6 +42,10 @@ return new class extends Migration
         Schema::table('attendances', function (Blueprint $table){
             $table->dropForeign('jiri_id');
             $table->dropForeign('contact_id');
+        });
+        Schema::table('assignments', function (Blueprint $table){
+            $table->dropForeign('jiri_id');
+            $table->dropForeign('project_id');
         });
     }
 };

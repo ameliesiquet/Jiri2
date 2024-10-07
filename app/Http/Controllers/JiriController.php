@@ -46,6 +46,7 @@ class JiriController extends Controller
      */
     public function show(Jiri $jiri)
     {
+        $jiri->load(['students', 'evaluators']);
         return view('jiris.show', compact('jiri'));
     }
 

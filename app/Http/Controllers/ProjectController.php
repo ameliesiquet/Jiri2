@@ -45,9 +45,6 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        if (! Gate::allows('view', $project)) {
-            abort(403);
-        }
         return view('projects.show', compact('project'));
     }
 
@@ -56,9 +53,6 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        if (! Gate::allows('view', $project)) {
-            abort(403);
-        }
         return view('projects.edit', compact('project'));
     }
 
@@ -67,9 +61,6 @@ class ProjectController extends Controller
      */
     public function update(ProjectStoreRequest $request, Project $project):RedirectResponse
     {
-        if (! Gate::allows('update', $project)) {
-            abort(403);
-        }
         $project->update($request->validated());
         return to_route('projects.show', $project);
     }

@@ -18,33 +18,55 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(1)
-            ->hasJiris(2)
-            ->hasProjects(2)
-            ->hasContacts(2)
-            ->create()
-            ->each(function ($user){
-                $user->jiris->each(function ($jiri) use ($user){
-                    $jiri->contacts()->attach(
-                        $user->contacts->random(2),
-                        ['role'=> random_int(0,1) ?
-                        ContactRole::Evaluator->value :
-                        ContactRole::Student->value]
-                    );
-                });
-            });
+        User::factory(3)
+            ->has(
+                Jiri::factory()
+                    ->count(5)
+                    ->hasAttached(
+                        Contact::factory()
+                            ->count(10)
+                            ->state(function (array $attributes, Jiri $jiri){
+                                return ['user_id' => $jiri->user_id];
+                            }),
+                        fn()=>['role'=> random_int(0,1) ?
+                            ContactRole::Evaluator->value :
+                            ContactRole::Student->value
+                        ]
+                    )
+                    ->hasAttached(
+                        Project::factory()
+                            ->count(5)
+                            ->state(function (array $attributes, Jiri $jiri){
+                                return ['user_id' => $jiri->user_id];
+                            }),
+                    )
+            )
 
-        User::factory(1)
-            ->hasJiris(2)
-            ->hasProjects(2)
-            ->hasContacts(2)
-            ->create(['name'=>'Amélie Siquet', 'email'=>'test@example.com', 'password' => '1234567890'])
-            ->each(function ($user){
-                $user->jiris->each(function ($jiri) use ($user){
-                    $jiri->evaluators()->attach(
-                        $user->contacts->random(2)
-                    );
-                });
-            });
+            ->create();
+
+        User::factory(3)
+            ->has(
+                Jiri::factory()
+                    ->count(5)
+                    ->hasAttached(
+                        Contact::factory()
+                            ->count(10)
+                            ->state(function (array $attributes, Jiri $jiri){
+                                return ['user_id' => $jiri->user_id];
+                            }),
+                        fn()=>['role'=> random_int(0,1) ?
+                            ContactRole::Evaluator->value :
+                            ContactRole::Student->value
+                        ]
+                    )
+                    ->hasAttached(
+                        Project::factory()
+                            ->count(5)
+                            ->state(function (array $attributes, Jiri $jiri){
+                                return ['user_id' => $jiri->user_id];
+                            }),
+                    )
+            )
+            ->create(['name'=>'Amélie Siquet', 'email'=>'test@example.com', 'password' => '1234567890']);
     }
 }
